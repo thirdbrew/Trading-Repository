@@ -1,4 +1,4 @@
-# EMA crossover bot — the one that came first
+# EMA crossover bot: the one that came first
 
 > [!CAUTION]
 > **This places live market orders. Do not run it.**
@@ -19,7 +19,7 @@ happened next.
 ## What happened next
 
 I wanted to know whether the strategy actually made money, so I built
-[**Back-Testing-Engine**](https://github.com/thirdbrew/Back-Testing-Engine) — a bar-by-bar
+[**Back-Testing-Engine**](https://github.com/thirdbrew/Back-Testing-Engine), a bar-by-bar
 backtester designed so lookahead bias is impossible by construction rather than by
 remembering to avoid it, and so every fill pays half-spread, slippage and commission
 charged *against* the trader.
@@ -32,9 +32,9 @@ Then I ran the same EMA(5/8) signal through it. Daily AAPL, 2013-02-08 to 2018-0
 | Total return, after costs | **+6.73%** | **+134.32%** |
 | Sharpe | 0.17 | 0.85 |
 | Max drawdown | −42.97% | −32.08% |
-| Win rate | 30.5% | — |
+| Win rate | 30.5% | n/a |
 
-Gross of costs the strategy returned +11.95%. Costs took it to +6.73% — **roughly half
+Gross of costs the strategy returned +11.95%. Costs took it to +6.73%, **roughly half
 the return, consumed by trading**, at 46.6× annual turnover.
 
 Those figures are not a claim in a README. They are pinned as golden values in
@@ -46,7 +46,7 @@ suite fails.
 EUR/USD, so it is not a backtest *of this bot*. What it establishes is that the signal is
 weak and that at high turnover, costs decide the outcome. This bot trades a
 one-minute timeframe, where turnover is far higher than 46.6× a year and the spread is
-the dominant term — and the code below charges nothing for it at all. The direction of
+the dominant term, and the code below charges nothing for it at all. The direction of
 that error is not ambiguous.
 
 ---
@@ -59,7 +59,7 @@ Worth naming, because "it lost money" is the least interesting part:
   prices for its candles and then reasons about entries as if it could transact at the
   close it just observed.
 - **Long only.** The `else` branch prints `"No crossover"` and returns. A downward cross
-  is not a signal to exit or reverse — it does nothing. The only way out of a position is
+  is not a signal to exit or reverse. It does nothing. The only way out of a position is
   the stop or the take-profit.
 - **No position management.** Nothing checks whether a position is already open before
   `place_order` fires, and nothing tracks what is live.
@@ -68,7 +68,7 @@ Worth naming, because "it lost money" is the least interesting part:
 - **Fixed 100 units** regardless of account size, volatility or the ATR it just computed
   for the stop.
 - The signal is computed on completed candles only, which is the one thing it gets
-  right — no lookahead in the entry logic.
+  right: there is no lookahead in the entry logic.
 
 ---
 
